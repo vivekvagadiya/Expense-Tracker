@@ -1,0 +1,101 @@
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: auto;
+    background-color: black;
+    color: white    ;
+}
+.parent{
+    width: 100%;
+    height: auto;
+}
+.input-section {
+    width: 500px;
+    height: auto;
+    /* border: 1px solid black; */
+    /* display: flex; */
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+    justify-content: center;
+}
+.input-section input{
+    width: 80%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+.input-section select{
+    width: 50%;
+    height: 30px;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+.handle-button{
+    width: 300px;
+    margin: auto;
+    margin-top: 10px;
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content:space-evenly;
+}
+.handle-button button{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: lightskyblue;
+}
+.handle-button button:hover ,.handle-button button:focus {
+    background-color: rgb(19, 143, 220);
+}
+
+.show-data{
+    width: 500px;
+    height: auto;
+    /* border: 1px solid black; */
+    position: absolute;
+    top: 10%;
+    display: flex;
+    margin: auto;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+table{
+    margin: auto;
+    width: 700px;
+    border-collapse: collapse;
+    text-align: center;
+    border: 1px solid white;
+}
+
+.thead{
+    background-color: grey;
+    border: 1px solid white;
+    background-color: grey;
+    color: white;
+}
+.tbody{
+    border: 1px solid white;
+
+}
+.table-expense{
+    color: red;
+}
+.table-income{
+    color: green;
+}
+.table-balance{
+    color: blue;
+}
+.table-delete{
+    width: 100px;
+    background-color: rgb(239, 142, 142);
+}
+.table-delete:hover{
+    background-color: rgb(208, 15, 15);
+}
+table tr:hover{
+    background-color: rgb(196, 188, 188);
+}

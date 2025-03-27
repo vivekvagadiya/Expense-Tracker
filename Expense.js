@@ -102,12 +102,12 @@ function renderTable() {
     for(let i=transaction.length-1;i>=0;i--){
         html += `
         <tr>
-                <td>${transaction[i].entry}</td>
+                <td style="color:${transaction[i].entry.charAt(0)==='+'?"green":"red"}">${transaction[i].entry}</td>
                 <td>${transaction[i].discription}</td>
-                <td>+$${transaction[i].amount}</td>
-                <td>-$${transaction[i].expense}</td>
-                <td>${transaction[i].availableBalance}</td>
-                <td><button onclick="handleDelete(${transaction[i].id})">Delete</button></td>
+                <td class="table-income">+$${transaction[i].amount}</td>
+                <td class="table-expense">-$${transaction[i].expense}</td>
+                <td class="table-balance">${transaction[i].availableBalance}</td>
+                <td><button class="table-delete" onclick="handleDelete(${transaction[i].id})">Delete</button></td>
             </tr>
             `
     }
