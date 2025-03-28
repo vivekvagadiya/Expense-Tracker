@@ -1,14 +1,16 @@
-let transaction = JSON.parse(localStorage.getItem('expense-app')) || [{
-    id:'',
-    amount:0,
-    expense:0,
-    availableBalance:0,
+let transaction = JSON.parse(localStorage.getItem('expense-app')) || [
+    {
+    id: '',
+    amount: 0,
+    expense: 0,
+    availableBalance: 0,
     discription: 'Discription',
-    entry:'0$',
-}]
+    entry: '0$',
+}
+]
 
 
-
+console.log(transaction)
 function renderHtml() {
     let incomeHtml = `
      <label for="income">Enter Income or Expense</label>
@@ -28,7 +30,7 @@ function renderHtml() {
     let addButton = `
      <button class="add-button" onclick="handleData()">Add</button>
      `
-     let clearButton=`<button onclick="removeStorage()">Clear Data</button>`
+    let clearButton = `<button onclick="removeStorage()">Clear Data</button>`
 
     document.querySelector('.add-amount').innerHTML = incomeHtml;
     document.querySelector('.add-disc').innerHTML = discHtml;
@@ -44,12 +46,12 @@ renderTable();
 let finalIncome = transaction[transaction.length-1].amount;
 // console.log(finalIncome)
 let finalExpense = transaction[transaction.length-1].expense;
-let availBalance=finalIncome-finalExpense;
-showTotal(finalIncome,finalExpense,availBalance);
+let availBalance = finalIncome - finalExpense;
+showTotal(finalIncome, finalExpense, availBalance);
 
 
 function handleData() {
-    let entrycheck='';
+    let entrycheck = '';
     let amount = Number(document.querySelector('.add-amount input').value);
     let discription = (document.querySelector('.discription')).value;
     let selectExpense = document.querySelector('#income-choice').value;
@@ -65,30 +67,30 @@ function handleData() {
     }
     if (selectExpense === 'income') {
         finalIncome += amount;
-        availBalance+=amount;
-        entrycheck=`+$${amount}`
+        availBalance += amount;
+        entrycheck = `+$${amount}`
     } else {
         finalExpense += expense;
-        availBalance=finalIncome-finalExpense;
-        entrycheck=`-$${amount}`
+        availBalance = finalIncome - finalExpense;
+        entrycheck = `-$${amount}`
     }
     transaction.push({
         amount: finalIncome,
         expense: finalExpense,
         discription: discription,
-        availableBalance:availBalance,
-        id:Date.now().toString(),
-        entry:entrycheck
+        availableBalance: availBalance,
+        id: Date.now().toString(),
+        entry: entrycheck
     })
     localStorage.setItem('expense-app', JSON.stringify(transaction))
     console.log(transaction);
     renderTable();
-    showTotal(finalIncome,finalExpense,availBalance);
+    showTotal(finalIncome, finalExpense, availBalance);
     // resetvalues();
 
 }
 
-{/* <td>${selectExpense==="income"?`+$${transaction[i].entry}`:`-$${transaction[i].entry}`}</td> */}
+{/* <td>${selectExpense==="income"?`+$${transaction[i].entry}`:`-$${transaction[i].entry}`}</td> */ }
 function renderTable() {
     let html = '';
     // transaction.map((item, index) => (
@@ -104,10 +106,10 @@ function renderTable() {
     // ))
 
 
-    for(let i=transaction.length-1;i>=0;i--){
+    for (let i = transaction.length - 1; i > 0; i--) {
         html += `
-        <tr>
-                <td style="color:${transaction[i].entry.charAt(0)==='+'?"green":"red"}">${transaction[i].entry}</td>
+            <tr>
+                <td style="color:${transaction[i].entry.charAt(0) === '+' ? "green" : "red"}">${transaction[i].entry}</td>
                 <td>${transaction[i].discription}</td>
                 <td class="table-income">+$${transaction[i].amount}</td>
                 <td class="table-expense">-$${transaction[i].expense}</td>
@@ -120,40 +122,65 @@ function renderTable() {
 }
 
 function handleDelete(id) {
-    transaction=transaction.filter((item,index)=>(
+    let getTransaction;
+    for(let i=0;i<transaction.length;i++){
+        if(transaction[i].id===id.toString()){
+            getTransaction=transaction[i];
+            // console.log('gettrans',getTransaction)
+        }
+    }
+    let entryvalue=getTransaction.entry;
+    let finalEntry=(Number(entryvalue.slice(2,entryvalue.length)))
+    if(entryvalue.charAt(0)==='+'){
+        finalIncome-=finalEntry;
+    }
+    else{
+        finalExpense-=finalEntry;
+    }
+    availBalance=finalIncome-finalExpense;
+    console.log(typeof finalEntry)
+
+    showTotal(finalIncome,finalExpense,availBalance)
+
+    transaction = transaction.filter((item, index) => (
         // console.log(id===item.id);
         // console.log(typeof id.toString()),
         // console.log(typeof item.id),
         // console.log(item.id!==id),
-        item.id!==id.toString()
+       
+        item.id !== id.toString()
     ))
-    localStorage.setItem('expense-app',JSON.stringify(transaction))
+
+    
+    localStorage.setItem('expense-app', JSON.stringify(transaction))
     renderTable();
     console.log(transaction)
 }
 
 function removeStorage() {
-    transaction=[{
-        id:'',
-        amount:0,
-        expense:0,
-        availableBalance:0,
+    transaction = [
+        {
+        id: '',
+        amount: 0,
+        expense: 0,
+        availableBalance: 0,
         discription: 'Discription',
-        entry:'0$'
-    }];
-    localStorage.setItem('expense-app',JSON.stringify(transaction))
+        entry: '0$'
+    }
+];
+    localStorage.setItem('expense-app', JSON.stringify(transaction))
     renderTable();
-    showTotal(0,0,0);
+    showTotal(0, 0, 0);
 }
 
-function resetvalues(){
-    document.querySelector('.add-amount input').value=''
-    document.querySelector('.add-disc input').value=''
-    document.querySelector('select').value=''
+function resetvalues() {
+    document.querySelector('.add-amount input').value = ''
+    document.querySelector('.add-disc input').value = ''
+    document.querySelector('select').value = ''
 }
 
-function showTotal(income,expense,availBalance){
-    document.querySelector('.show-income').textContent=`Total Income: ${income}`;
-    document.querySelector('.show-expense').textContent=`Total expense: ${expense}`;
-    document.querySelector('.show-avail').textContent=`Available Balance: ${availBalance}`;
+function showTotal(income, expense, availBalance) {
+    document.querySelector('.show-income').textContent = `Total Income: ${income}`;
+    document.querySelector('.show-expense').textContent = `Total expense: ${expense}`;
+    document.querySelector('.show-avail').textContent = `Available Balance: ${availBalance}`;
 }
