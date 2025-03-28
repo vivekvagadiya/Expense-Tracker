@@ -1,12 +1,12 @@
 let transaction = JSON.parse(localStorage.getItem('expense-app')) || [
     {
-    id: '',
-    amount: 0,
-    expense: 0,
-    availableBalance: 0,
-    discription: 'Discription',
-    entry: '0$',
-}
+        id: '',
+        amount: 0,
+        expense: 0,
+        availableBalance: 0,
+        discription: 'Discription',
+        entry: '0$',
+    }
 ]
 
 
@@ -45,9 +45,9 @@ renderHtml();
 renderTable();
 
 // let finalIncome = 0;
-let finalIncome = transaction[transaction.length-1].amount;
+let finalIncome = transaction[transaction.length - 1].amount;
 // console.log(finalIncome)
-let finalExpense = transaction[transaction.length-1].expense;
+let finalExpense = transaction[transaction.length - 1].expense; `  `
 let availBalance = finalIncome - finalExpense;
 showTotal(finalIncome, finalExpense, availBalance);
 
@@ -62,7 +62,10 @@ function handleData() {
     // console.log(typeof amount)
     // console.log(typeof discription)
     // console.log(typeof discription);
-
+    if (errorCheck(amount, discription, selectExpense) === false) {
+        console.log('false')
+        return;
+    }
     if (!amount || !discription || !selectExpense) {
         console.log('data is require')
         errorHandle();
@@ -90,7 +93,7 @@ function handleData() {
     console.log(transaction);
     renderTable();
     showTotal(finalIncome, finalExpense, availBalance);
-    // resetvalues();
+    resetvalues();
 
 }
 
@@ -127,24 +130,24 @@ function renderTable() {
 
 function handleDelete(id) {
     let getTransaction;
-    for(let i=0;i<transaction.length;i++){
-        if(transaction[i].id===id.toString()){
-            getTransaction=transaction[i];
+    for (let i = 0; i < transaction.length; i++) {
+        if (transaction[i].id === id.toString()) {
+            getTransaction = transaction[i];
             // console.log('gettrans',getTransaction)
         }
     }
-    let entryvalue=getTransaction.entry;
-    let finalEntry=(Number(entryvalue.slice(2,entryvalue.length)))
-    if(entryvalue.charAt(0)==='+'){
-        finalIncome-=finalEntry;
+    let entryvalue = getTransaction.entry;
+    let finalEntry = (Number(entryvalue.slice(2, entryvalue.length)))
+    if (entryvalue.charAt(0) === '+') {
+        finalIncome -= finalEntry;
     }
-    else{
-        finalExpense-=finalEntry;
+    else {
+        finalExpense -= finalEntry;
     }
-    availBalance=finalIncome-finalExpense;
+    availBalance = finalIncome - finalExpense;
     console.log(typeof finalEntry)
 
-    showTotal(finalIncome,finalExpense,availBalance)
+    showTotal(finalIncome, finalExpense, availBalance)
 
     transaction = transaction.filter((item, index) => (
         // console.log(id===item.id);
@@ -154,7 +157,6 @@ function handleDelete(id) {
         item.id !== id.toString()
     ))
 
-    
     localStorage.setItem('expense-app', JSON.stringify(transaction))
     renderTable();
     console.log(transaction)
@@ -163,14 +165,14 @@ function handleDelete(id) {
 function removeStorage() {
     transaction = [
         {
-        id: '',
-        amount: 0,
-        expense: 0,
-        availableBalance: 0,
-        discription: 'Discription',
-        entry: '0$'
-    }
-];
+            id: '',
+            amount: 0,
+            expense: 0,
+            availableBalance: 0,
+            discription: 'Discription',
+            entry: '0$'
+        }
+    ];
     localStorage.setItem('expense-app', JSON.stringify(transaction))
     renderTable();
     showTotal(0, 0, 0);
@@ -188,8 +190,40 @@ function showTotal(income, expense, availBalance) {
     document.querySelector('.show-avail').textContent = `Available Balance: ${availBalance}`;
 }
 
-function errorHandle(){
-    document.querySelectorAll('.error').forEach((item)=>{
-        console.log('error',item)
+function errorHandle() {
+    document.querySelectorAll('.error').forEach((item) => {
+        console.log('error', item)
     })
+}
+
+function errorCheck(amount, discription, selectExpense) {
+    console.log(amount, discription, selectExpense)
+    let isvalid = true;
+    if (!amount) {
+        isvalid=false;
+        document.querySelector('.error-amount').classList.add('error-style');
+        document.querySelector('.error-amount').classList.remove('span-show');
+    } else {
+        document.querySelector('.error-amount').classList.remove('error-style');
+        document.querySelector('.error-amount').classList.add('span-show');
+    }
+    if (!discription) {
+        isvalid = false;
+        document.querySelector('.error-disc').classList.remove('span-show');
+        document.querySelector('.error-disc').classList.add('error-style');
+    }
+    else {
+        document.querySelector('.error-disc').classList.add('span-show');
+        document.querySelector('.error-disc').classList.remove('error-style');
+    }
+    if (!selectExpense) {
+        isvalid = false;
+        document.querySelector('.error-select').classList.add('error-style');
+        document.querySelector('.error-select').classList.remove('span-show');
+    }
+    else {
+        document.querySelector('.error-select').classList.add('span-show');
+        document.querySelector('.error-select').classList.remove('error-style');
+    }
+    return isvalid;
 }

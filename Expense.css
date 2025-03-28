@@ -102,4 +102,11 @@ table tr:hover{
 
 .error-style{
     color: red;
+    visibility: visible;
+    font-size: small;
+}
+.span-show,span{
+    color: red;
+    visibility: hidden;
+    font-size: small;
 }
