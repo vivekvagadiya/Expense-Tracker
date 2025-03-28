@@ -10,6 +10,8 @@ let transaction = JSON.parse(localStorage.getItem('expense-app')) || [
 ]
 
 
+//console.log('running')
+
 console.log(transaction)
 function renderHtml() {
     let incomeHtml = `
@@ -63,6 +65,8 @@ function handleData() {
 
     if (!amount || !discription || !selectExpense) {
         console.log('data is require')
+        errorHandle();
+        // errorsSpan.classList.add('error-style');
         return;
     }
     if (selectExpense === 'income') {
@@ -147,7 +151,6 @@ function handleDelete(id) {
         // console.log(typeof id.toString()),
         // console.log(typeof item.id),
         // console.log(item.id!==id),
-       
         item.id !== id.toString()
     ))
 
@@ -183,4 +186,10 @@ function showTotal(income, expense, availBalance) {
     document.querySelector('.show-income').textContent = `Total Income: ${income}`;
     document.querySelector('.show-expense').textContent = `Total expense: ${expense}`;
     document.querySelector('.show-avail').textContent = `Available Balance: ${availBalance}`;
+}
+
+function errorHandle(){
+    document.querySelectorAll('.error').forEach((item)=>{
+        console.log('error',item)
+    })
 }
