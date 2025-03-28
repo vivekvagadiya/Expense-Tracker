@@ -10,7 +10,6 @@ let transaction = JSON.parse(localStorage.getItem('expense-app')) || [
 ]
 
 
-//console.log('running')
 
 console.log(transaction)
 function renderHtml() {
@@ -44,9 +43,7 @@ function renderHtml() {
 renderHtml();
 renderTable();
 
-// let finalIncome = 0;
 let finalIncome = transaction[transaction.length - 1].amount;
-// console.log(finalIncome)
 let finalExpense = transaction[transaction.length - 1].expense; `  `
 let availBalance = finalIncome - finalExpense;
 showTotal(finalIncome, finalExpense, availBalance);
@@ -58,10 +55,7 @@ function handleData() {
     let discription = (document.querySelector('.discription')).value;
     let selectExpense = document.querySelector('#income-choice').value;
     let expense = selectExpense === 'expense' ? amount : 0;
-    // console.log(expense)
-    // console.log(typeof amount)
-    // console.log(typeof discription)
-    // console.log(typeof discription);
+
     if (errorCheck(amount, discription, selectExpense) === false) {
         console.log('false')
         return;
@@ -69,7 +63,6 @@ function handleData() {
     if (!amount || !discription || !selectExpense) {
         console.log('data is require')
         errorHandle();
-        // errorsSpan.classList.add('error-style');
         return;
     }
     if (selectExpense === 'income') {
@@ -93,25 +86,11 @@ function handleData() {
     console.log(transaction);
     renderTable();
     showTotal(finalIncome, finalExpense, availBalance);
-    resetvalues();
 
 }
 
-{/* <td>${selectExpense==="income"?`+$${transaction[i].entry}`:`-$${transaction[i].entry}`}</td> */ }
 function renderTable() {
     let html = '';
-    // transaction.map((item, index) => (
-    //     html += `
-    //     <tr ${index}>
-    //             <td>${item.amount}</td>
-    //             <td>${item.expense}</td>
-    //             <td>${item.discription}</td>
-    //             <td>${item.availableBalance}</td>
-    //             <td><button onclick="handleDelete(${item.id})">Delete</button></td>
-    //         </tr>
-    //         `
-    // ))
-
 
     for (let i = transaction.length - 1; i > 0; i--) {
         html += `
@@ -133,7 +112,6 @@ function handleDelete(id) {
     for (let i = 0; i < transaction.length; i++) {
         if (transaction[i].id === id.toString()) {
             getTransaction = transaction[i];
-            // console.log('gettrans',getTransaction)
         }
     }
     let entryvalue = getTransaction.entry;
@@ -150,10 +128,6 @@ function handleDelete(id) {
     showTotal(finalIncome, finalExpense, availBalance)
 
     transaction = transaction.filter((item, index) => (
-        // console.log(id===item.id);
-        // console.log(typeof id.toString()),
-        // console.log(typeof item.id),
-        // console.log(item.id!==id),
         item.id !== id.toString()
     ))
 
