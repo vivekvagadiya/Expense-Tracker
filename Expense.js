@@ -40,9 +40,14 @@ function renderHtml() {
 renderHtml();
 renderTable();
 
-let finalIncome = 0;
-let finalExpense = 0;
-let availBalance=0;
+// let finalIncome = 0;
+let finalIncome = transaction[transaction.length-1].amount;
+// console.log(finalIncome)
+let finalExpense = transaction[transaction.length-1].expense;
+let availBalance=finalIncome-finalExpense;
+showTotal(finalIncome,finalExpense,availBalance);
+
+
 function handleData() {
     let entrycheck='';
     let amount = Number(document.querySelector('.add-amount input').value);
