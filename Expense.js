@@ -85,6 +85,7 @@ function handleData() {
     localStorage.setItem('expense-app', JSON.stringify(transaction))
     console.log(transaction);
     renderTable();
+    resetvalues();
     showTotal(finalIncome, finalExpense, availBalance);
 
 }
